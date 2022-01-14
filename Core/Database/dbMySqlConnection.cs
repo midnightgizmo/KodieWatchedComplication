@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Core.Data;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,18 @@ namespace Core.Database
 
             return WasConnectionOpended;
 
+        }
+
+        /// <summary>
+        /// Opens the connection using the connection data found in <see cref="Settings.DatabaseLogin"/>
+        /// </summary>
+        /// <returns>True if connection was open</returns>
+        public bool OpenConnection()
+        {
+            return this.OpenConnection(Settings.DatabaseLogin.ServerLocation,
+                                                   Settings.DatabaseLogin.dbUser,
+                                                   Settings.DatabaseLogin.dbPassword,
+                                                   Settings.DatabaseLogin.DatabaseName);
         }
 
         /// <summary>
