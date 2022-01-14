@@ -27,9 +27,9 @@ namespace Core.Database.TV
 
             sb.Append("SELECT c12 as SeasonNumber, c13 as EpisodeNumber, strFileName as FileName FROM ");
             sb.Append(this.dbTableName + " ");
-            sb.Append("WHERE idShow=:TvShowID;");
+            sb.Append("WHERE idShow=?TvShowID;");
 
-            MySqlParameter param = new MySqlParameter(":TvShowID",MySqlDbType.Int32);
+            MySqlParameter param = new MySqlParameter("?TvShowID",MySqlDbType.Int32);
             param.Value = TvShowID;
 
             rdr = con.ExecuteParameterizedSelectCommand(sb.ToString(), new MySqlParameter[] { param });
@@ -37,8 +37,8 @@ namespace Core.Database.TV
             while (rdr.Read())
             {
                 TvShowEpisode tvEpp = new TvShowEpisode();
-                tvEpp.SeasonNumber = rdr.GetInt32("SeasonNumber");
-                tvEpp.SeasonEppNumber = rdr.GetInt32("EpisodeNumber");
+                tvEpp.SeasonNumber = int.Parse(rdr.GetString("SeasonNumber"));
+                tvEpp.SeasonEppNumber = int.Parse(rdr.GetString("EpisodeNumber"));
                 tvEpp.FileName = rdr.GetString("FileName");
 
                 tvShowEppisodes.Add(tvEpp);
