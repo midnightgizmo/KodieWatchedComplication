@@ -25,9 +25,11 @@ namespace Core.Database.TV
             if (wasLoginSucsefull == false)
                 return tvShowEppisodes;
 
-            sb.Append("SELECT c12 as SeasonNumber, c13 as EpisodeNumber, strFileName as FileName FROM ");
+            sb.Append("SELECT c12 as SeasonNumber, c13 as EpisodeNumber, strFileName as FileName, playCount FROM ");
             sb.Append(this.dbTableName + " ");
-            sb.Append("WHERE idShow=?TvShowID;");
+            sb.Append("WHERE idShow=?TvShowID ");
+            sb.Append("ORDER BY SeasonNumber, EpisodeNumber");
+
 
             MySqlParameter param = new MySqlParameter("?TvShowID",MySqlDbType.Int32);
             param.Value = TvShowID;
