@@ -42,6 +42,7 @@ namespace Core.Database.TV
                 tvEpp.SeasonNumber = int.Parse(rdr.GetString("SeasonNumber"));
                 tvEpp.SeasonEppNumber = int.Parse(rdr.GetString("EpisodeNumber"));
                 tvEpp.FileName = rdr.GetString("FileName");
+                tvEpp.WatchedCount = rdr["playCount"] == DBNull.Value ? 0 : rdr.GetInt32("playCount");
 
                 tvShowEppisodes.Add(tvEpp);
             }
