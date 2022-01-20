@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="UI.UserControls.ucTvSeason"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI.UserControls"
+             xmlns:Converter="clr-namespace:UI.ValueConverters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="episodes" Grid.Column="1" Command="{Binding TVSeasonEpisodesToggleCommand}"/>
+            <TextBlock Grid.Column="2" FontSize="14pt" Margin="10 0 0 0">
+                <TextBlock.Inlines>
+                    <Run Text="Season" />
+                    <Run Text="{Binding SeasonNumber}" />
+                </TextBlock.Inlines>
+            </TextBlock>
+        </Grid>
+        <ItemsControl ItemsSource="{Binding Episodes}" Visibility="{Binding Path=IsTvShowSeasonEpisodesViewable, Converter={Converter:ControlBoolToVisibilityConverter},FallbackValue=Collapsed}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Name="myStackPanel" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <local:ucTvEpisode DataContext="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

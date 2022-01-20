@@ -4,9 +4,66 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
+        xmlns:UserControls="clr-namespace:UI.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Name="cmdLoadFileFromDisk" Content="Load From Json File" Grid.Column="0" 
+                        HorizontalAlignment="Left" FontSize="12pt" Click="cmdLoadFileFromDisk_Click" />
+                <Button Name="cmdSave" Content="Save Data" FontSize="12pt" Click="cmdSave_Click" />
+            </StackPanel>
+
+            <Button Content="Load From Database" Grid.Column="1" Command="{Binding LoadDataBaseDataCommand}"
+                    HorizontalAlignment="Right" FontSize="12pt"/>
+        </Grid>
+        
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding TvShowViewModel.TVShows}" AlternationCount="2">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Name="myStackPanel" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+
+                
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border x:Name="PART_Border" Padding="0 5">
+                                <UserControls:ucTVShow DataContext="{Binding}"/>
+                            </Border>
+                            
+                        </Grid>
+
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <Setter TargetName="PART_Border" Property="Background" Value="#86d5fc" />
+                            </Trigger>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <Setter TargetName="PART_Border"  Property="Background" Value="#fff" />
+                            </Trigger>
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
